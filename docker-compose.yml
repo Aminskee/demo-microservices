@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+
+# Services
+  customer-service:
+    image: demo-customer-service
+    build:
+      context: apps/customer-service
+    ports:
+      - 8080:8080
+
+  image-service:
+    image: demo-image-service
+    build:
+      context: apps/image-service
+    ports:
+    - 4040:4040
+
+# Infrastructure
+
+# Utils
+

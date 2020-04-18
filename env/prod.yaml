@@ -1,0 +1,3 @@
+host: <...>
+stage: PROD
+kibanaIndex: 308d98e0-9d63-11e9-b69d-aff6ef6d50fb

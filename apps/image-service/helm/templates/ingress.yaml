@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ingress
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.host }}
+      secretName: {{ replace  "." "-" .Values.host }}-tls
+  rules:
+    - host: {{ .Values.host }}
+      http:
+        paths:
+          - path: /api/app/v2/community/my-profile
+            backend:
+              serviceName: customer-service
+              servicePort: 8080
+          - path: /api/app/v1/customer/
+            backend:
+              serviceName: customer-service
+              servicePort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: community-images-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 20m
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.host }}
+      secretName: {{ replace  "." "-" .Values.host }}-tls
+  rules:
+    - host: {{ .Values.host }}
+      http:
+        paths:
+          - path: /api/app/v1/demo/customer
+            backend:
+              serviceName: demo-service
+              servicePort: 8080

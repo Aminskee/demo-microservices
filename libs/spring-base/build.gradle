@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+allprojects {
+    group = "com.daimler"
+
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'maven-publish'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                url "$iwpArtifactory"
+                credentials {
+                    username = "$ipwArtifactoryUser"
+                    password = "$ipwArtifactoryPassword"
+                }
+                name "iwp_artifactory"
+            }
+        }
+    }
+}
